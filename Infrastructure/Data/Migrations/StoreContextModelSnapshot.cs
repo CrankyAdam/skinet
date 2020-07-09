@@ -38,17 +38,17 @@ namespace Infrastructure.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductTypeId")
+                    b.Property<int>("ProductBrandId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProductbrandId")
+                    b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductTypeId");
+                    b.HasIndex("ProductBrandId");
 
-                    b.HasIndex("ProductbrandId");
+                    b.HasIndex("ProductTypeId");
 
                     b.ToTable("Products");
                 });
@@ -83,15 +83,15 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
-                    b.HasOne("Core.Entities.ProductType", "ProductType")
+                    b.HasOne("Core.Entities.ProductBrand", "ProductBrand")
                         .WithMany()
-                        .HasForeignKey("ProductTypeId")
+                        .HasForeignKey("ProductBrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.ProductBrand", "ProductBrand")
+                    b.HasOne("Core.Entities.ProductType", "ProductType")
                         .WithMany()
-                        .HasForeignKey("ProductbrandId")
+                        .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
