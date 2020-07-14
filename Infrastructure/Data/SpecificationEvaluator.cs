@@ -9,16 +9,31 @@ namespace Infrastructure.Data
     {
         public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> spec)
         {
-            var query = inputQuery; 
+            var query = inputQuery;
 
-            if(spec.Criteria != null)
+            if (spec.Criteria != null)
             {
-                query = query.Where(spec.Criteria); 
+                query = query.Where(spec.Criteria);
             }
 
-            query = spec.Includes.Aggregate(query, (current, Include) => current.Include(Include)); 
+            if (spec.OrderBy != null)
+            {
+                query = query.OrderBy(spec.OrderBy);
+            }
 
-            return query; 
+            if (spec.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+
+            if (spec.IsPagingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
+            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+
+            return query;
         }
     }
 }

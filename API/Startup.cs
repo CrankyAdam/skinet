@@ -58,18 +58,19 @@ namespace API
         {
     
             app.UseMiddleware<ExceptionMiddleware>();
-            
-            app.UseStatusCodePagesWithReExecute("/errors/{0}"); 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
-            app.UseStaticFiles(); 
+            app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwaggerDocumention(); 
+            app.UseSwaggerDocumention();
 
             app.UseEndpoints(endpoints =>
             {
